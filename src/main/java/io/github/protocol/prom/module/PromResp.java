@@ -11,4 +11,9 @@ public class PromResp {
 
     public PromResp() {
     }
+
+    @Override
+    public String toString() {
+        return status;
+    }
 }
