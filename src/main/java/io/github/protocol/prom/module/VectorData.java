@@ -13,4 +13,12 @@ public class VectorData extends PromData {
 
     public VectorData() {
     }
+
+    @Override
+    public String toString() {
+        return "VectorData{"
+                + "resultType=" + getResultType()
+                + ", result=" + result
+                + '}';
+    }
 }

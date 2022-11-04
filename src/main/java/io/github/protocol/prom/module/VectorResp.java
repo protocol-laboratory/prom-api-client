@@ -11,4 +11,12 @@ public class VectorResp extends PromResp {
 
     public VectorResp() {
     }
+
+    @Override
+    public String toString() {
+        return "VectorResp{"
+                + "status" + getStatus()
+                + ", data=" + data
+                + '}';
+    }
 }

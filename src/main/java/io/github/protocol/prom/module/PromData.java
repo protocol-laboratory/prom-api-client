@@ -11,4 +11,9 @@ public class PromData {
 
     public PromData() {
     }
+
+    @Override
+    public String toString() {
+        return resultType;
+    }
 }

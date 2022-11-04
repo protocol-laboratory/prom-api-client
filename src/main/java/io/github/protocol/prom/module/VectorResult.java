@@ -8,12 +8,20 @@ import java.util.Map;
 
 @Setter
 @Getter
-class VectorResult {
+public class VectorResult {
 
     private Map<String, String> metric;
 
     private List<Double> value;
 
     public VectorResult() {
+    }
+
+    @Override
+    public String toString() {
+        return "VectorResult{"
+                + "metric=" + metric
+                + ", value=" + value
+                + '}';
     }
 }
