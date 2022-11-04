@@ -9,22 +9,22 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 @Testcontainers
 class PromApiVectorTest {
 
     @Container
     private static final GenericContainer prom = new GenericContainer("prom/prometheus:v2.2.1")
-            .waitingFor(new HttpWaitStrategy().forPath("/metrics"))
+            .waitingFor(new HttpWaitStrategy().forPath("/api/v1/query?query=process_max_fds")
+                    .forResponsePredicate(s -> !s.contains("\"result\":[]")))
             .withExposedPorts(9090);
 
     @Test
-    public void testPrometheusGauge() throws IOException, InterruptedException {
-        TimeUnit.SECONDS.sleep(16);
+    public void testPrometheusGauge() throws IOException {
         PromApiClient promApiClient = new PromApiClient("localhost", prom.getFirstMappedPort());
         VectorResp vectorResp = promApiClient.query("process_max_fds");
         Assertions.assertNotNull(vectorResp);
+        System.out.println(vectorResp);
         Assertions.assertEquals(1, vectorResp.getData().getResult().size());
     }
 
