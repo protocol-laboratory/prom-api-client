@@ -13,48 +13,92 @@ public class PromApiClientImplTest {
     private PromApiClient promApiClient = Mockito.spy(new PromApiClientImpl());
 
     @Test
-    public void queryTotalPulsarRateInTest() throws IOException {
+    public void queryPulsarTotalRateInTest() throws IOException {
         String promRep = """
-                {"status":"success","data":{"resultType":"vector","result":[{"metric":{},"value":[1667722837.195,"100.0"]}]}}
+                {
+                    "status":"success",
+                    "data":{
+                        "resultType":"vector",
+                        "result":[
+                            {
+                                "metric":{},
+                                "value":[
+                                    1667722837.195,
+                                    "100.0"
+                                ]
+                            }
+                        ]
+                    }
+                }
                 """;
 
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(Constant.QUERY_TOTAL_PULSAR_RATE_IN);
-        Double result = promApiClient.queryTotalPulsarRateIn();
+        Mockito.doReturn(vectorResp).when(promApiClient).query(PromQlConstant.QUERY_PULSAR_TOTAL_RATE_IN);
+        Double result = promApiClient.queryPulsarTotalRateIn();
         Assertions.assertEquals(100.0, result);
     }
 
 
     @Test
-    public void queryTotalNamespacePulsarRateInTest() throws IOException {
+    public void queryPulsarTotalNamespaceRateInTest() throws IOException {
         String promRep = """
-                {"status":"success","data":{"resultType":"vector","result":[{"metric":{},"value":[1667728283.263,"100.0"]}]}}
+                {
+                    "status":"success",
+                    "data":{
+                        "resultType":"vector",
+                        "result":[
+                            {
+                                "metric":{},
+                                "value":[
+                                    1667728283.263,
+                                    "100.0"
+                                ]
+                            }
+                        ]
+                    }
+                }
                 """;
         String namespace = "public/default";
 
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(String.format(Constant.QUERY_NAMESPACE_PULSAR_RATE_IN, namespace));
-        Double result = promApiClient.queryNamespacePulsarRateIn(namespace);
+        Mockito.doReturn(vectorResp).when(promApiClient).query(
+                String.format(PromQlConstant.QUERY_PULSAR_NAMESPACE_RATE_IN, namespace));
+        Double result = promApiClient.queryPulsarNamespaceRateIn(namespace);
         Assertions.assertEquals(100.0, result);
     }
 
 
     @Test
-    public void queryTotalTopicPulsarRateInTest() throws IOException {
+    public void queryPulsarTotalTopicRateInTest() throws IOException {
         String promRep = """
-                {"status":"success","data":{"resultType":"vector","result":[{"metric":{},"value":[1667728972.628,"100.1"]}]}}
+                {
+                    "status":"success",
+                    "data":{
+                        "resultType":"vector",
+                        "result":[
+                            {
+                                "metric":{},
+                                "value":[
+                                    1667728972.628,
+                                    "100.1"
+                                ]
+                            }
+                        ]
+                    }
+                }
                 """;
         String topic = "public/default/test";
 
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(String.format(Constant.QUERY_TOPIC_PULSAR_RATE_IN, topic));
-        Double result = promApiClient.queryTopicPulsarRateIn(topic);
+        Mockito.doReturn(vectorResp).when(promApiClient).query(
+                String.format(PromQlConstant.QUERY_PULSAR_TOPIC_RATE_IN, topic));
+        Double result = promApiClient.queryPulsarTopicRateIn(topic);
         Assertions.assertEquals(100.1, result);
     }
 
 
     @Test
-    public void queryPartitionPulsarRateInTest() throws IOException {
+    public void queryPulsarPartitionRateInTest() throws IOException {
         String promRep = """
                 {
                     "status":"success",
@@ -82,51 +126,96 @@ public class PromApiClientImplTest {
         String partition = "public/default/test-partition-0";
 
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(String.format(Constant.QUERY_PARTITION_PULSAR_RATE_IN, partition));
-        Double result = promApiClient.queryPartitionPulsarRateIn(partition);
+        Mockito.doReturn(vectorResp).when(promApiClient).query(
+                String.format(PromQlConstant.QUERY_PULSAR_PARTITION_RATE_IN, partition));
+        Double result = promApiClient.queryPulsarPartitionRateIn(partition);
         Assertions.assertEquals(5.25, result);
     }
 
     @Test
-    public void queryTotalPulsarRateOutTest() throws IOException {
+    public void queryPulsarTotalRateOutTest() throws IOException {
         String promRep = """
-                {"status":"success","data":{"resultType":"vector","result":[{"metric":{},"value":[1667729538.124,"100.098"]}]}}
+                {
+                    "status":"success",
+                    "data":{
+                        "resultType":"vector",
+                        "result":[
+                            {
+                                "metric":{},
+                                "value":[
+                                    1667729538.124,
+                                    "100.098"
+                                ]
+                            }
+                        ]
+                    }
+                }
                 """;
 
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(Constant.QUERY_TOTAL_PULSAR_RATE_OUT);
-        Double result = promApiClient.queryTotalPulsarRateOut();
+        Mockito.doReturn(vectorResp).when(promApiClient).query(PromQlConstant.QUERY_PULSAR_TOTAL_RATE_OUT);
+        Double result = promApiClient.queryPulsarTotalRateOut();
         Assertions.assertEquals(100.098, result);
     }
 
     @Test
-    public void queryTotalNamespacePulsarRateOutTest() throws IOException {
+    public void queryPulsarTotalNamespaceRateOutTest() throws IOException {
         String promRep = """
-                {"status":"success","data":{"resultType":"vector","result":[{"metric":{},"value":[1667729538.124,"50.098"]}]}}
+                {
+                    "status":"success",
+                    "data":{
+                        "resultType":"vector",
+                        "result":[
+                            {
+                                "metric":{},
+                                "value":[
+                                    1667729538.124,
+                                    "50.098"
+                                ]
+                            }
+                        ]
+                    }
+                }
                 """;
         String namespace = "public/default";
 
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(String.format(Constant.QUERY_NAMESPACE_PULSAR_RATE_OUT, namespace));
-        Double result = promApiClient.queryNamespacePulsarRateOut(namespace);
+        Mockito.doReturn(vectorResp).when(promApiClient).query(
+                String.format(PromQlConstant.QUERY_PULSAR_NAMESPACE_RATE_OUT, namespace));
+        Double result = promApiClient.queryPulsarNamespaceRateOut(namespace);
         Assertions.assertEquals(50.098, result);
     }
 
     @Test
-    public void queryTotalTopicPulsarRateOutTest() throws IOException {
+    public void queryPulsarTotalTopicRateOutTest() throws IOException {
         String promRep = """
-                {"status":"success","data":{"resultType":"vector","result":[{"metric":{},"value":[1667729538.124,"10.098"]}]}}
+                {
+                    "status":"success",
+                    "data":{
+                        "resultType":"vector",
+                        "result":[
+                            {
+                                "metric":{},
+                                "value":[
+                                    1667729538.124,
+                                    "10.098"
+                                ]
+                            }
+                        ]
+                    }
+                }
                 """;
         String topic = "public/default/test";
 
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(String.format(Constant.QUERY_TOPIC_PULSAR_RATE_OUT, topic));
-        Double result = promApiClient.queryTopicPulsarRateOut(topic);
+        Mockito.doReturn(vectorResp).when(promApiClient).query(
+                String.format(PromQlConstant.QUERY_PULSAR_TOPIC_RATE_OUT, topic));
+        Double result = promApiClient.queryPulsarTopicRateOut(topic);
         Assertions.assertEquals(10.098, result);
     }
 
     @Test
-    public void queryTotalPartitionPulsarRateOutTest() throws IOException {
+    public void queryPulsarTotalPartitionRateOutTest() throws IOException {
         String promRep = """
                 {
                     "status":"success",
@@ -154,28 +243,44 @@ public class PromApiClientImplTest {
         String partition = "persistent://public/default/test-partition-0";
 
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(String.format(Constant.QUERY_PARTITION_PULSAR_RATE_OUT, partition));
-        Double result = promApiClient.queryPartitionPulsarRateOut(partition);
+        Mockito.doReturn(vectorResp).when(promApiClient).query(
+                String.format(PromQlConstant.QUERY_PULSAR_PARTITION_RATE_OUT, partition));
+        Double result = promApiClient.queryPulsarPartitionRateOut(partition);
         Assertions.assertEquals(1.183, result);
     }
 
 
     @Test
-    public void queryTopicPulsarSubscriptionRateOutTest() throws IOException {
+    public void queryPulsarTopicSubscriptionRateOutTest() throws IOException {
         String promRep = """
-                {"status":"success","data":{"resultType":"vector","result":[{"metric":{},"value":[1667730765.836,"1.099"]}]}}
+                {
+                    "status":"success",
+                    "data":{
+                        "resultType":"vector",
+                        "result":[
+                            {
+                                "metric":{},
+                                "value":[
+                                    1667730765.836,
+                                    "1.099"
+                                ]
+                            }
+                        ]
+                    }
+                }
                 """;
         String topic = "public/default/test";
         String subscription = "sub-test";
 
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(String.format(Constant.QUERY_TOPIC_PULSAR_SUBSCRIPTION_RATE_OUT, topic, subscription));
-        Double result = promApiClient.queryTopicPulsarSubscriptionRateOut(topic, subscription);
+        Mockito.doReturn(vectorResp).when(promApiClient).query(
+                String.format(PromQlConstant.QUERY_PULSAR_TOPIC_SUBSCRIPTION_RATE_OUT, topic, subscription));
+        Double result = promApiClient.queryPulsarTopicSubscriptionRateOut(topic, subscription);
         Assertions.assertEquals(1.099, result);
     }
 
     @Test
-    public void queryPartitionPulsarSubscriptionRateOutTest() throws IOException {
+    public void queryPulsarPartitionSubscriptionRateOutTest() throws IOException {
         String promRep = """
                 {
                     "status":"success",
@@ -204,55 +309,101 @@ public class PromApiClientImplTest {
         String partitionName = "public/default/test";
         String subscription = "sub-test";
 
+        String promQL = String.format(PromQlConstant.QUERY_PULSAR_PARTITION_SUBSCRIPTION_RATE_OUT, partitionName,
+                subscription);
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(String.format(Constant.QUERY_PARTITION_PULSAR_SUBSCRIPTION_RATE_OUT, partitionName, subscription));
-        Double result = promApiClient.queryPartitionPulsarSubscriptionRateOut(partitionName, subscription);
+        Mockito.doReturn(vectorResp).when(promApiClient).query(promQL);
+        Double result = promApiClient.queryPulsarPartitionSubscriptionRateOut(partitionName, subscription);
         Assertions.assertEquals(0.233, result);
     }
 
     @Test
-    public void queryTotalPulsarSubscriptionBacklogTest() throws IOException {
+    public void queryPulsarTotalSubscriptionBacklogTest() throws IOException {
         String promRep = """
-                {"status":"success","data":{"resultType":"vector","result":[{"metric":{},"value":[1667731992.904,"0"]}]}}
+                {
+                    "status":"success",
+                    "data":{
+                        "resultType":"vector",
+                        "result":[
+                            {
+                                "metric":{},
+                                "value":[
+                                    1667731992.904,
+                                    "0"
+                                ]
+                            }
+                        ]
+                    }
+                }
                 """;
 
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(Constant.QUERY_TOTAL_PULSAR_SUBSCRIPTION_BACKLOG);
-        Double result = promApiClient.queryTotalPulsarSubscriptionBacklog();
+        Mockito.doReturn(vectorResp).when(promApiClient).query(PromQlConstant.QUERY_PULSAR_TOTAL_SUBSCRIPTION_BACKLOG);
+        Double result = promApiClient.queryPulsarTotalSubscriptionBacklog();
         Assertions.assertEquals(0, result);
     }
 
     @Test
-    public void queryTotalNamespacePulsarSubscriptionBacklogTest() throws IOException {
+    public void queryPulsarTotalNamespaceSubscriptionBacklogTest() throws IOException {
         String promRep = """
-                {"status":"success","data":{"resultType":"vector","result":[{"metric":{},"value":[1667731992.904,"0"]}]}}
+                {
+                    "status":"success",
+                    "data":{
+                        "resultType":"vector",
+                        "result":[
+                            {
+                                "metric":{},
+                                "value":[
+                                    1667731992.904,
+                                    "0"
+                                ]
+                            }
+                        ]
+                    }
+                }
                 """;
 
         String namespace = "public/default";
 
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(String.format(Constant.QUERY_NAMESPACE_PULSAR_SUBSCRIPTION_BACKLOG, namespace));
-        Double result = promApiClient.queryNamespacePulsarSubscriptionBacklog(namespace);
+        Mockito.doReturn(vectorResp).when(promApiClient).query(
+                String.format(PromQlConstant.QUERY_PULSAR_NAMESPACE_SUBSCRIPTION_BACKLOG, namespace));
+        Double result = promApiClient.queryPulsarNamespaceSubscriptionBacklog(namespace);
         Assertions.assertEquals(0, result);
     }
 
     @Test
-    public void queryTotalTopicPulsarSubscriptionBacklogTest() throws IOException {
+    public void queryPulsarTotalTopicSubscriptionBacklogTest() throws IOException {
         String promRep = """
-                {"status":"success","data":{"resultType":"vector","result":[{"metric":{},"value":[1667732586.703,"0"]}]}}
+                {
+                    "status":"success",
+                    "data":{
+                        "resultType":"vector",
+                        "result":[
+                            {
+                                "metric":{},
+                                "value":[
+                                    1667732586.703,
+                                    "0"
+                                ]
+                            }
+                        ]
+                    }
+                }
                 """;
 
         String topic = "public/default/test";
         String subscription = "sub-test";
 
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(String.format(Constant.QUERY_TOPIC_PULSAR_SUBSCRIPTION_BACKLOG, topic, subscription));
-        Double result = promApiClient.queryTopicPulsarSubscriptionBacklog(topic, subscription);
+        Mockito.doReturn(vectorResp).when(promApiClient).query(
+                String.format(PromQlConstant.QUERY_TOPIC_PULSAR_SUBSCRIPTION_BACKLOG, topic, subscription));
+        Double result = promApiClient.queryPulsarTopicSubscriptionBacklog(topic, subscription);
         Assertions.assertEquals(0, result);
     }
 
     @Test
-    public void queryPartitionPulsarSubscriptionBacklogTest() throws IOException {
+    public void queryPulsarPartitionSubscriptionBacklogTest() throws IOException {
         String promRep = """
                 {
                     "status":"success",
@@ -283,8 +434,9 @@ public class PromApiClientImplTest {
         String subscription = "sub-test";
 
         VectorResp vectorResp = JacksonUtil.toObject(promRep, VectorResp.class);
-        Mockito.doReturn(vectorResp).when(promApiClient).query(String.format(Constant.QUERY_PARTITION_PULSAR_SUBSCRIPTION_BACKLOG, partitionName, subscription));
-        Double result = promApiClient.queryPartitionPulsarSubscriptionBacklog(partitionName, subscription);
+        Mockito.doReturn(vectorResp).when(promApiClient).query(
+                String.format(PromQlConstant.QUERY_PARTITION_PULSAR_SUBSCRIPTION_BACKLOG, partitionName, subscription));
+        Double result = promApiClient.queryPulsarPartitionSubscriptionBacklog(partitionName, subscription);
         Assertions.assertEquals(0, result);
     }
 }

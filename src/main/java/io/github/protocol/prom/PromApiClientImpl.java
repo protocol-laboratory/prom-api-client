@@ -58,8 +58,8 @@ public class PromApiClientImpl implements PromApiClient {
     }
 
     @Override
-    public Double queryTotalPulsarRateIn() throws IOException {
-        VectorResp resp = query(Constant.QUERY_TOTAL_PULSAR_RATE_IN);
+    public Double queryPulsarTotalRateIn() throws IOException {
+        VectorResp resp = query(PromQlConstant.QUERY_PULSAR_TOTAL_RATE_IN);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
             throw new RuntimeException("internal error");
@@ -68,8 +68,8 @@ public class PromApiClientImpl implements PromApiClient {
     }
 
     @Override
-    public Double queryNamespacePulsarRateIn(String namespace) throws IOException {
-        String promQl = String.format(Constant.QUERY_NAMESPACE_PULSAR_RATE_IN, namespace);
+    public Double queryPulsarNamespaceRateIn(String namespace) throws IOException {
+        String promQl = String.format(PromQlConstant.QUERY_PULSAR_NAMESPACE_RATE_IN, namespace);
         VectorResp resp = query(promQl);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
@@ -79,8 +79,8 @@ public class PromApiClientImpl implements PromApiClient {
     }
 
     @Override
-    public Double queryTopicPulsarRateIn(String topic) throws IOException {
-        String promQl = String.format(Constant.QUERY_TOPIC_PULSAR_RATE_IN, topic);
+    public Double queryPulsarTopicRateIn(String topic) throws IOException {
+        String promQl = String.format(PromQlConstant.QUERY_PULSAR_TOPIC_RATE_IN, topic);
         VectorResp resp = query(promQl);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
@@ -90,8 +90,8 @@ public class PromApiClientImpl implements PromApiClient {
     }
 
     @Override
-    public Double queryPartitionPulsarRateIn(String partitionName) throws IOException {
-        String promQl = String.format(Constant.QUERY_PARTITION_PULSAR_RATE_IN, partitionName);
+    public Double queryPulsarPartitionRateIn(String partitionName) throws IOException {
+        String promQl = String.format(PromQlConstant.QUERY_PULSAR_PARTITION_RATE_IN, partitionName);
         VectorResp resp = query(promQl);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
@@ -101,8 +101,8 @@ public class PromApiClientImpl implements PromApiClient {
     }
 
     @Override
-    public Double queryTotalPulsarRateOut() throws IOException {
-        VectorResp resp = query(Constant.QUERY_TOTAL_PULSAR_RATE_OUT);
+    public Double queryPulsarTotalRateOut() throws IOException {
+        VectorResp resp = query(PromQlConstant.QUERY_PULSAR_TOTAL_RATE_OUT);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
             throw new RuntimeException("internal error");
@@ -111,8 +111,8 @@ public class PromApiClientImpl implements PromApiClient {
     }
 
     @Override
-    public Double queryNamespacePulsarRateOut(String namespace) throws IOException {
-        String promQl = String.format(Constant.QUERY_NAMESPACE_PULSAR_RATE_OUT, namespace);
+    public Double queryPulsarNamespaceRateOut(String namespace) throws IOException {
+        String promQl = String.format(PromQlConstant.QUERY_PULSAR_NAMESPACE_RATE_OUT, namespace);
         VectorResp resp = query(promQl);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
@@ -122,8 +122,8 @@ public class PromApiClientImpl implements PromApiClient {
     }
 
     @Override
-    public Double queryTopicPulsarRateOut(String topic) throws IOException {
-        String promQl = String.format(Constant.QUERY_TOPIC_PULSAR_RATE_OUT, topic);
+    public Double queryPulsarTopicRateOut(String topic) throws IOException {
+        String promQl = String.format(PromQlConstant.QUERY_PULSAR_TOPIC_RATE_OUT, topic);
         VectorResp resp = query(promQl);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
@@ -133,8 +133,8 @@ public class PromApiClientImpl implements PromApiClient {
     }
 
     @Override
-    public Double queryPartitionPulsarRateOut(String partitionName) throws IOException {
-        String promQl = String.format(Constant.QUERY_PARTITION_PULSAR_RATE_OUT, partitionName);
+    public Double queryPulsarPartitionRateOut(String partitionName) throws IOException {
+        String promQl = String.format(PromQlConstant.QUERY_PULSAR_PARTITION_RATE_OUT, partitionName);
         VectorResp resp = query(promQl);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
@@ -144,30 +144,34 @@ public class PromApiClientImpl implements PromApiClient {
     }
 
     @Override
-    public Double queryTopicPulsarSubscriptionRateOut(String topic, String subscription) throws IOException {
-        String promQl = String.format(Constant.QUERY_TOPIC_PULSAR_SUBSCRIPTION_RATE_OUT, topic, subscription);
+    public Double queryPulsarTopicSubscriptionRateOut(String topic, String subscription) throws IOException {
+        String promQl = String.format(PromQlConstant.QUERY_PULSAR_TOPIC_SUBSCRIPTION_RATE_OUT, topic, subscription);
         VectorResp resp = query(promQl);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
-            throw new IllegalArgumentException(String.format("topic %s or subscription %s invalid", topic, subscription));
+            throw new IllegalArgumentException(String.format("topic %s or subscription %s invalid",
+                    topic, subscription));
         }
         return result.get(0).getValue().get(1);
     }
 
     @Override
-    public Double queryPartitionPulsarSubscriptionRateOut(String partitionName, String subscription) throws IOException {
-        String promQl = String.format(Constant.QUERY_PARTITION_PULSAR_SUBSCRIPTION_RATE_OUT, partitionName, subscription);
+    public Double queryPulsarPartitionSubscriptionRateOut(String partitionName, String subscription)
+            throws IOException {
+        String promQl = String.format(PromQlConstant.QUERY_PULSAR_PARTITION_SUBSCRIPTION_RATE_OUT,
+                partitionName, subscription);
         VectorResp resp = query(promQl);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
-            throw new IllegalArgumentException(String.format("partitionName %s or subscription %s invalid", partitionName, subscription));
+            throw new IllegalArgumentException(String.format("partitionName %s or subscription %s invalid",
+                    partitionName, subscription));
         }
         return result.get(0).getValue().get(1);
     }
 
     @Override
-    public Double queryTotalPulsarSubscriptionBacklog() throws IOException {
-        String promQl = String.format(Constant.QUERY_TOTAL_PULSAR_SUBSCRIPTION_BACKLOG);
+    public Double queryPulsarTotalSubscriptionBacklog() throws IOException {
+        String promQl = String.format(PromQlConstant.QUERY_PULSAR_TOTAL_SUBSCRIPTION_BACKLOG);
         VectorResp resp = query(promQl);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
@@ -177,8 +181,8 @@ public class PromApiClientImpl implements PromApiClient {
     }
 
     @Override
-    public Double queryNamespacePulsarSubscriptionBacklog(String namespace) throws IOException {
-        String promQl = String.format(Constant.QUERY_NAMESPACE_PULSAR_SUBSCRIPTION_BACKLOG, namespace);
+    public Double queryPulsarNamespaceSubscriptionBacklog(String namespace) throws IOException {
+        String promQl = String.format(PromQlConstant.QUERY_PULSAR_NAMESPACE_SUBSCRIPTION_BACKLOG, namespace);
         VectorResp resp = query(promQl);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
@@ -188,24 +192,28 @@ public class PromApiClientImpl implements PromApiClient {
     }
 
     @Override
-    public Double queryTopicPulsarSubscriptionBacklog(String topic, String subscription) throws IOException {
-        String promQl = String.format(Constant.QUERY_TOPIC_PULSAR_SUBSCRIPTION_BACKLOG, topic, subscription);
+    public Double queryPulsarTopicSubscriptionBacklog(String topic, String subscription) throws IOException {
+        String promQl = String.format(PromQlConstant.QUERY_TOPIC_PULSAR_SUBSCRIPTION_BACKLOG, topic, subscription);
         VectorResp resp = query(promQl);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
-            throw new IllegalArgumentException(String.format("topic %s or subscription %s invalid", topic, subscription));
+            throw new IllegalArgumentException(String.format("topic %s or subscription %s invalid",
+                    topic, subscription));
         }
         return result.get(0).getValue().get(1);
     }
 
 
     @Override
-    public Double queryPartitionPulsarSubscriptionBacklog(String partitionName, String subscription) throws IOException {
-        String promQl = String.format(Constant.QUERY_PARTITION_PULSAR_SUBSCRIPTION_BACKLOG, partitionName, subscription);
+    public Double queryPulsarPartitionSubscriptionBacklog(String partitionName, String subscription)
+            throws IOException {
+        String promQl = String.format(PromQlConstant.QUERY_PARTITION_PULSAR_SUBSCRIPTION_BACKLOG,
+                partitionName, subscription);
         VectorResp resp = query(promQl);
         List<VectorResult> result = resp.getData().getResult();
         if (result.size() < 1) {
-            throw new IllegalArgumentException(String.format("partitionName %s or subscription %s invalid", partitionName, subscription));
+            throw new IllegalArgumentException(String.format("partitionName %s or subscription %s invalid",
+                    partitionName, subscription));
         }
         return result.get(0).getValue().get(1);
     }

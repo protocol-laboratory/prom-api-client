@@ -17,6 +17,7 @@
         <jackson.version>2.13.4</jackson.version>
         <junit.version>5.9.1</junit.version>
         <log4j.version>2.17.2</log4j.version>
+        <mockito.version>4.8.1</mockito.version>
         <okhttp.version>4.9.3</okhttp.version>
         <testcontainers.version>1.17.5</testcontainers.version>
         <!-- plugin -->
@@ -24,7 +25,6 @@
         <checkstyle-plugin.version>3.2.0</checkstyle-plugin.version>
         <lombok.version>1.18.24</lombok.version>
         <puppycrawl.version>10.3.3</puppycrawl.version>
-        <mockito.version>4.8.1</mockito.version>
         <spotbugs-maven-plugin.version>4.7.2.0</spotbugs-maven-plugin.version>
     </properties>
 

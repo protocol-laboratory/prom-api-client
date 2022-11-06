@@ -12,32 +12,32 @@ public interface PromApiClient {
 
     VectorResp query(String query) throws IOException;
 
-    Double queryTotalPulsarRateIn() throws IOException;
+    Double queryPulsarTotalRateIn() throws IOException;
 
-    Double queryNamespacePulsarRateIn(String namespace) throws IOException;
+    Double queryPulsarNamespaceRateIn(String namespace) throws IOException;
 
-    Double queryTopicPulsarRateIn(String topic) throws IOException;
+    Double queryPulsarTopicRateIn(String topic) throws IOException;
 
-    Double queryPartitionPulsarRateIn(String partitionName) throws IOException;
+    Double queryPulsarPartitionRateIn(String partitionName) throws IOException;
 
-    Double queryTotalPulsarRateOut() throws IOException;
+    Double queryPulsarTotalRateOut() throws IOException;
 
-    Double queryNamespacePulsarRateOut(String namespace) throws IOException;
+    Double queryPulsarNamespaceRateOut(String namespace) throws IOException;
 
-    Double queryTopicPulsarRateOut(String topic) throws IOException;
+    Double queryPulsarTopicRateOut(String topic) throws IOException;
 
-    Double queryPartitionPulsarRateOut(String partitionName) throws IOException;
+    Double queryPulsarPartitionRateOut(String partitionName) throws IOException;
 
-    Double queryTopicPulsarSubscriptionRateOut(String topic, String subscription) throws IOException;
+    Double queryPulsarTopicSubscriptionRateOut(String topic, String subscription) throws IOException;
 
-    Double queryPartitionPulsarSubscriptionRateOut(String partitionName, String subscription) throws IOException;
+    Double queryPulsarPartitionSubscriptionRateOut(String partitionName, String subscription) throws IOException;
 
-    Double queryTotalPulsarSubscriptionBacklog() throws IOException;
+    Double queryPulsarTotalSubscriptionBacklog() throws IOException;
 
-    Double queryNamespacePulsarSubscriptionBacklog(String namespace) throws IOException;
+    Double queryPulsarNamespaceSubscriptionBacklog(String namespace) throws IOException;
 
-    Double queryTopicPulsarSubscriptionBacklog(String topic, String subscription) throws IOException;
+    Double queryPulsarTopicSubscriptionBacklog(String topic, String subscription) throws IOException;
 
-    Double queryPartitionPulsarSubscriptionBacklog(String partitionName, String subscription) throws IOException;
+    Double queryPulsarPartitionSubscriptionBacklog(String partitionName, String subscription) throws IOException;
 
 }
