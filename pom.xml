@@ -17,6 +17,7 @@
         <jackson.version>2.13.4</jackson.version>
         <junit.version>5.9.1</junit.version>
         <log4j.version>2.17.2</log4j.version>
+        <mockito.version>4.8.1</mockito.version>
         <okhttp.version>4.9.3</okhttp.version>
         <testcontainers.version>1.17.5</testcontainers.version>
         <!-- plugin -->
@@ -69,6 +70,12 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

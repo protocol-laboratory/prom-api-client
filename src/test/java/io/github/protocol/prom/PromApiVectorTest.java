@@ -21,7 +21,7 @@ class PromApiVectorTest {
 
     @Test
     public void testPrometheusGauge() throws IOException {
-        PromApiClient promApiClient = new PromApiClient("localhost", prom.getFirstMappedPort());
+        PromApiClient promApiClient = PromApiClient.builder().host("localhost").port(prom.getFirstMappedPort()).build();
         VectorResp vectorResp = promApiClient.query("process_max_fds");
         Assertions.assertNotNull(vectorResp);
         System.out.println(vectorResp);
