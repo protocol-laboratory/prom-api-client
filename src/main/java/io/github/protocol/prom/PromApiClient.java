@@ -11,6 +11,8 @@ public interface PromApiClient {
     }
 
     VectorResp query(String query) throws IOException;
+    
+    VectorResp queryRange(String query, long startMs, long endMs, long stepMs) throws IOException;
 
     Double queryPulsarTotalRateIn() throws IOException;
 
