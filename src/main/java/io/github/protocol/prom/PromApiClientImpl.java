@@ -56,6 +56,31 @@ public class PromApiClientImpl implements PromApiClient {
             return JacksonUtil.toObject(content, VectorResp.class);
         }
     }
+    
+    @Override
+    public VectorResp queryRange(String query, long startMs, long endMs, long stepMs) throws IOException {
+        HttpUrl parse = HttpUrl.parse(promHttpPrefix + "/api/v1/query_range");
+        if (parse == null) {
+            throw new IllegalArgumentException("parse url error");
+        }
+        HttpUrl.Builder urlBuilder = parse.newBuilder();
+        urlBuilder.addQueryParameter("query", query);
+        urlBuilder.addQueryParameter("start", String.valueOf(startMs));
+        urlBuilder.addQueryParameter("end", String.valueOf(endMs));
+        urlBuilder.addQueryParameter("step", String.valueOf(stepMs));
+        Request request = new Request.Builder()
+                .url(urlBuilder.build())
+                .build();
+        try (Response response = this.client.newCall(request).execute()) {
+            ResponseBody body = response.body();
+            String content = body == null ? "" : body.string();
+            if (!response.isSuccessful()) {
+                log.error("query_range prometheus failed, response code is {} msg {}", response.code(), content);
+                throw new IOException(String.format("query_range prometheus failed, error: %s", content));
+            }
+            return JacksonUtil.toObject(content, VectorResp.class);
+        }
+    }
 
     @Override
     public Double queryPulsarTotalRateIn() throws IOException {
