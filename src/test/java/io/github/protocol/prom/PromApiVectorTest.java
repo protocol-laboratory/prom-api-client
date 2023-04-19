@@ -1,6 +1,7 @@
 package io.github.protocol.prom;
 
 import io.github.protocol.prom.module.VectorResp;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.GenericContainer;
@@ -10,6 +11,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.io.IOException;
 
+@Slf4j
 @Testcontainers
 class PromApiVectorTest {
 
@@ -24,7 +26,7 @@ class PromApiVectorTest {
         PromApiClient promApiClient = PromApiClient.builder().host("localhost").port(prom.getFirstMappedPort()).build();
         VectorResp vectorResp = promApiClient.query("process_max_fds");
         Assertions.assertNotNull(vectorResp);
-        System.out.println(vectorResp);
+        log.info("vectorResp: {}", vectorResp);
         Assertions.assertEquals(1, vectorResp.getData().getResult().size());
     }
 
