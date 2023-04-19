@@ -9,6 +9,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 @Testcontainers
 class PromApiVectorTest {
@@ -23,6 +24,16 @@ class PromApiVectorTest {
     public void testPrometheusGauge() throws IOException {
         PromApiClient promApiClient = PromApiClient.builder().host("localhost").port(prom.getFirstMappedPort()).build();
         VectorResp vectorResp = promApiClient.query("process_max_fds");
+        Assertions.assertNotNull(vectorResp);
+        System.out.println(vectorResp);
+        Assertions.assertEquals(1, vectorResp.getData().getResult().size());
+    }
+
+    @Test
+    public void testPrometheusQueryRange() throws IOException {
+        PromApiClient promApiClient = PromApiClient.builder().host("localhost").port(prom.getFirstMappedPort()).build();
+        long now = System.currentTimeMillis();
+        VectorResp vectorResp = promApiClient.queryRange("process_max_fds", now - TimeUnit.SECONDS.toMillis(10), now, 100);
         Assertions.assertNotNull(vectorResp);
         System.out.println(vectorResp);
         Assertions.assertEquals(1, vectorResp.getData().getResult().size());

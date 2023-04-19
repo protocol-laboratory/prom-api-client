@@ -56,7 +56,7 @@ public class PromApiClientImpl implements PromApiClient {
             return JacksonUtil.toObject(content, VectorResp.class);
         }
     }
-    
+
     @Override
     public VectorResp queryRange(String query, long startMs, long endMs, long stepMs) throws IOException {
         HttpUrl parse = HttpUrl.parse(promHttpPrefix + "/api/v1/query_range");
