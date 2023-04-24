@@ -1,5 +1,6 @@
 package io.github.protocol.prom;
 
+import io.github.protocol.prom.module.MatrixResp;
 import io.github.protocol.prom.module.VectorResp;
 import io.github.protocol.prom.module.VectorResult;
 import io.github.protocol.prom.util.JacksonUtil;
@@ -54,6 +55,35 @@ public class PromApiClientImpl implements PromApiClient {
                 throw new IOException(String.format("query prometheus failed, error: %s", content));
             }
             return JacksonUtil.toObject(content, VectorResp.class);
+        }
+    }
+
+    @Override
+    public MatrixResp queryRange(String query, long startMs, long endMs, int stepSec) throws IOException {
+        HttpUrl parse = HttpUrl.parse(promHttpPrefix + "/api/v1/query_range");
+        if (parse == null) {
+            throw new IllegalArgumentException("parse url error");
+        }
+        String startTime = new StringBuilder(String.valueOf(startMs)).insert(10, ".").toString();
+        String endTime = new StringBuilder(String.valueOf(endMs)).insert(10, ".").toString();
+        HttpUrl requestUrl = parse.newBuilder()
+                .addQueryParameter("query", query)
+                .addQueryParameter("start", startTime)
+                .addQueryParameter("end", endTime)
+                .addQueryParameter("step", String.valueOf(stepSec))
+                .build();
+        log.info(String.valueOf(requestUrl));
+        Request request = new Request.Builder()
+                .url(requestUrl)
+                .build();
+        try (Response response = this.client.newCall(request).execute()) {
+            final ResponseBody body = response.body();
+            String content = body == null ? "" : body.string();
+            if (!response.isSuccessful()) {
+                log.error("query prometheus failed, response code is {} msg {}", response.code(), content);
+                throw new IOException(String.format("query prometheus failed, err: %s", content));
+            }
+            return JacksonUtil.toObject(content, MatrixResp.class);
         }
     }
 

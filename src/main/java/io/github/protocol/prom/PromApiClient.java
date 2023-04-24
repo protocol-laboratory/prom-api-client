@@ -1,5 +1,6 @@
 package io.github.protocol.prom;
 
+import io.github.protocol.prom.module.MatrixResp;
 import io.github.protocol.prom.module.VectorResp;
 
 import java.io.IOException;
@@ -11,6 +12,8 @@ public interface PromApiClient {
     }
 
     VectorResp query(String query) throws IOException;
+
+    MatrixResp queryRange(String query, long startMs, long endMs, int stepSec) throws IOException;
 
     Double queryPulsarTotalRateIn() throws IOException;
 
